@@ -18,7 +18,6 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
         aws-region: 'us-east-1' # Use the correct AWS region without the availability zone
 
     - name: Login to Amazon ECR
@@ -27,15 +26,11 @@ jobs:
 
     - name: Build and push Docker images with docker-compose
       run: |
-      cd docker
-      docker-compose build
-      docker-compose push
-
+        cd docker
+        docker-compose build
+        docker-compose push
 
 # Uncomment and adjust the following lines if you have Terraform configuration set up for deployment
 #  deploy:
 #    needs: build-and-push
-#    runs-on: ubuntu-latest
-#    steps:
-#    - name: Checkout Repo
-#      uses: actions/checkout
+#   
