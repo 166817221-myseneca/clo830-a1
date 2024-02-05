@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - prod # This specifies the branch that will trigger the workflow
+      - prod # Indentation is critical in YAML files
 
 jobs:
   build-and-push:
