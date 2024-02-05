@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - prod # Indentation is critical in YAML files
+      - prod
 
 jobs:
   build-and-push:
@@ -13,14 +13,12 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v2
 
-   - name: Configure AWS credentials
+    - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }} # only if you're using temporary credentials
-        aws-region: us-east-1
-
+        aws-region: 'us-east-1' # Use the correct AWS region without the availability zone
 
     - name: Login to Amazon ECR
       id: login-ecr
@@ -31,13 +29,10 @@ jobs:
         docker-compose build
         docker-compose push
 
-    # Optional: Deploy using Terraform
-    # Uncomment and modify the following lines if you have Terraform configuration set up for deployment
-    # - name: Set up Terraform
-    #   uses: hashicorp/setup-terraform@v1
-    # 
-    # - name: Terraform Init
-    #   run: terraform init
-    # 
-    # - name: Terraform Apply
-    #   run: terraform apply -auto-approve
+# Uncomment and adjust the following lines if you have Terraform configuration set up for deployment
+#  deploy:
+#    needs: build-and-push
+#    runs-on: ubuntu-latest
+#    steps:
+#    - name: Checkout Repo
+#      uses: actions/checkout
