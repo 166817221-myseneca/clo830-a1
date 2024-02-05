@@ -27,8 +27,10 @@ jobs:
 
     - name: Build and push Docker images with docker-compose
       run: |
-        docker-compose build
-        docker-compose push
+      cd docker
+      docker-compose build
+      docker-compose push
+
 
 # Uncomment and adjust the following lines if you have Terraform configuration set up for deployment
 #  deploy:
